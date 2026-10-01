@@ -1,0 +1,50 @@
+<!doctype html>
+<!--
+  Fuente del lockup de marca. Fondo transparente, sin recuadro.
+  Se rinde en dos versiones porque GitHub cambia de tema:
+
+    chrome --headless --disable-gpu --allow-file-access-from-files \
+           --force-device-scale-factor=2 --default-background-color=00000000 \
+           --window-size=760,210 --screenshot=oyzters-light.png "plate.html"
+    chrome --headless --disable-gpu --allow-file-access-from-files \
+           --force-device-scale-factor=2 --default-background-color=00000000 \
+           --window-size=760,210 --screenshot=oyzters-dark.png "plate.html?theme=dark"
+
+  iso.png sale de potronet/oyzters.png: el trazo negro recortado del fondo gris,
+  limitado al círculo del logo (la perla queda hueca y toma el fondo de la
+  página). Está en tinta oscura; en el tema oscuro se lleva a blanco puro.
+  figtree.woff2 viene de hyperlabs-ai/.github, copiado aquí para que esto se
+  pueda regenerar sin tener el otro repo a la mano.
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face {
+    font-family: 'Figtree';
+    src: url('figtree.woff2') format('woff2');
+    font-weight: 100 900; font-style: normal; font-display: block;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 760px; height: 210px; background: transparent; }
+  body { display: flex; align-items: center; justify-content: center; gap: 30px; }
+  .iso { width: 136px; height: 136px; object-fit: contain; display: block; }
+  .word {
+    font-family: 'Figtree', sans-serif; font-size: 124px; font-weight: 800;
+    letter-spacing: -0.028em; color: #0F1117; line-height: 1;
+    transform: translateY(-4px);
+  }
+  body.dark .word { color: #FFFFFF; }
+  body.dark .iso { filter: brightness(0) invert(1); }   /* blanco puro, igual que el wordmark */
+</style>
+</head>
+<body>
+  <img class="iso" src="iso.png" alt="">
+  <span class="word">Oyzters</span>
+  <script>
+    if (new URLSearchParams(location.search).get('theme') === 'dark') {
+      document.body.classList.add('dark');
+    }
+  </script>
+</body>
+</html>
